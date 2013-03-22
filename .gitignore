@@ -8,4 +8,5 @@
 /include/
 /man/
 .coveragerc
+*.prof
 /lib/
