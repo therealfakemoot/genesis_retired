@@ -2,3 +2,10 @@
 .coverage
 .gitignore
 *.swp
+.noseids
+/bin/
+/build/
+/include/
+/man/
+.coveragerc
+/lib/
