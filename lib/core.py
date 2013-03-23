@@ -1,6 +1,6 @@
 from pandas import DataFrame as df
-from lib import simplex
-from lib.profiler import profile_this
+import simplex
+from profiler import profile_this
 from random import randint
 import sys
 from collections import OrderedDict as od
@@ -60,7 +60,8 @@ def coord_access(frame, coords=(0,0)):
     return frame[x][coords[1]]
 
 
-noise = generate_map(size=100, scale=.00001)
+if __name__ == '__main__':
+    noise = generate_map(size=100, scale=.00001)
 
 #print new_noise
 #print new_noise.describe()
