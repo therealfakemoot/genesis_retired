@@ -1,5 +1,5 @@
-from mapper.lib.objects import Map, Room, Exit
-from mapper.lib.objects import dirs as Cardinals
+from genesis.lib.objects import Map, Room, Exit
+from genesis.lib.objects import dirs as Cardinals
 from nose.tools import raises, eq_
 
 
