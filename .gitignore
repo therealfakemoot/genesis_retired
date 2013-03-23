@@ -3,10 +3,5 @@
 .gitignore
 *.swp
 .noseids
-/bin/
-/build/
-/include/
-/man/
 .coveragerc
 *.prof
-/lib/
