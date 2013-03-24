@@ -1,1 +1,1 @@
-Nothing to see here yet.
+Genesis is a toolkit for building worlds programatically. The central functional unit of Genesis is the Map; a map is an arbitrarily sized piece of terrain, which may or may not contain bodies of water, mountain ranges complete with volcanos and caverns, forests, and other natural features. If desired, unnatural structures can be placed, such as cities, dungeons, and other artifical or otherworldly features.
