@@ -24,10 +24,8 @@ def generate_map(size=None, seed=None, scale=None, height=None):
         values will allow generation of maps with deep bodies of water or large
         amounts of underground volume.
     '''
-    if not height:
+    if height is None:
         height = 15000
-    else:
-        height = height
     if not scale:
         scale = .000000000000000001
     if not size:
@@ -40,12 +38,13 @@ def generate_map(size=None, seed=None, scale=None, height=None):
 
     ind = list()
     simplices = od() 
-
+    
+    simplex3 = simplex.simplex3
     for i in range(-size, size+1):
         simplices[i] = list()
         ind.append(i)
         for j in range(-size, size+1):
-            simp = simplex.simplex3(i*scale,j*scale,0)
+            simp = simplex3(i*scale,j*scale,0)
             simplices[i].append(simp)
 
     #set_trace()
