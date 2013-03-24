@@ -42,12 +42,11 @@ def generate_map(size=None, seed=None, scale=None, height=None):
     simplices = od() 
 
     for i in range(-size, size+1):
-        key = 'X({})'.format(i)
-        simplices[key] = list()
-        ind.append('Y({})'.format(i))
+        simplices[i] = list()
+        ind.append(i)
         for j in range(-size, size+1):
             simp = simplex.simplex3(i*scale,j*scale,0)
-            simplices[key].append(simp)
+            simplices[i].append(simp)
 
     #set_trace()
 
