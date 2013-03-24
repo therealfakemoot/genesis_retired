@@ -56,12 +56,7 @@ def generate_map(size=None, seed=None, scale=None, height=None):
     return noise
 
 def coord_access(frame, coords=(0,0)):
-    x = 'X({})'.format(coords[0])
-    return frame[x][coords[1]]
-
+    return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
     noise = generate_map(size=20, scale=.00001)
-
-#print new_noise
-#print new_noise.describe()
