@@ -1,5 +1,6 @@
 from pandas import DataFrame as df
 import simplex
+from noise import PerlinNoise
 from profiler import profile_this
 from random import randint
 import sys
@@ -7,7 +8,7 @@ from collections import OrderedDict as od
 from pdb import set_trace
 
 #@profile_this
-def generate_map(size=None, seed=None, scale=None, height=None):
+def generate_map(size=None, seed=None, scale=None, height=None, simp=False):
     '''Generates a table of simplex values for a two-dimensional plane.
     Parameters
     ----------
@@ -38,6 +39,11 @@ def generate_map(size=None, seed=None, scale=None, height=None):
 
     ind = list()
     simplices = od() 
+    
+    if not simp:
+        noise = PerlinNoise(size=(size,size))
+        #set_trace()
+        return df(noise.getData())
     
     simplex3 = simplex.simplex3
     for i in range(-size, size+1):
