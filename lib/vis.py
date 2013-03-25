@@ -13,7 +13,7 @@ PLT.subplot(111)
 size = 150
 noise = generate_map(size)
 x = y = NP.array(range(-size,size))
-PLT.hexbin(x, y, C=noise.values, gridsize=gridsize, cmap=CM.jet, bins=None)
+PLT.hexbin(x, y, C=noise.values, gridsize=gridsize, cmap=CM.jet)
 PLT.axis([x.min(), x.max(), y.min(), y.max()])
 
 cb = PLT.colorbar()

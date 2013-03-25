@@ -27,7 +27,7 @@ def generate_map(size=None, seed=None, scale=None, height=None):
     if height is None:
         height = 15000
     if not scale:
-        scale = .000000000000000001
+        scale = .00001
     if not size:
         size = 5
     if not seed:
