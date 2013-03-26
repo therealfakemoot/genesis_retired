@@ -35,18 +35,23 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=False):
         size = 5
     if not seed:
         seed = randint(0, sys.maxint)
-    simplex.set_seed(seed)
 
     print "Seed: {0}\n".format(seed)
 
     
     if not simp:
-        noise = df(n)
+        #Perlin noise is currently not being used, pending further review.
+        pass
+        #noise = df(n)
     else:
+        simplex.set_seed(seed)
         noise = _simplex(size)
         #set_trace()
     noise = df(noise)
-    noise = noise * scale
+    return noise
+
+def rescale(frame, scale, height):
+    noise = frame * scale
     noise = (noise + 1) * height
     return noise
 
@@ -66,11 +71,14 @@ def _simplex(size):
         simplices.append(simplex3(x,y,0))
     simplices = numpy.array(simplices)
     #set_trace()
-    return numpy.split(simplices, size+1)
+    if size % 2 == 0:
+        return numpy.split(simplices, size+1)
+    else:
+        return numpy.split(simplices, size)
 
 def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=4, scale=.00001, simp=True)
+    noise = generate_map(size=5, scale=.00001, simp=True)
     print noise.describe()
