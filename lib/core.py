@@ -1,3 +1,4 @@
+import numpy
 from pandas import DataFrame as df
 import simplex
 from noise import PerlinNoise
@@ -42,8 +43,9 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=False):
     
     if not simp:
         noise = PerlinNoise(size=(size,size))
-        #set_trace()
-        return df(noise.getData())
+        _,size = noise.size
+        n = numpy.split(noise.getData(), size)
+        return df(n)
     
     simplex3 = simplex.simplex3
     for i in range(-size, size+1):
@@ -63,4 +65,4 @@ def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=20, scale=.00001)
+    noise = generate_map(size=10, scale=.00001)
