@@ -42,7 +42,7 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=False):
     simplices = od() 
     
     if not simp:
-        noise = PerlinNoise(size=(size,size))
+        noise = PerlinNoise(size=(size,size+1))
         _,size = noise.size
         n = numpy.split(noise.getData(), size)
         return df(n)
@@ -65,4 +65,4 @@ def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=10, scale=.00001)
+    noise = generate_map(size=500, scale=.00001, simp=True)
