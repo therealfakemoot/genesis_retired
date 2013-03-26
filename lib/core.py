@@ -1,3 +1,4 @@
+import itertools
 import numpy
 from pandas import DataFrame as df
 import simplex
@@ -38,31 +39,38 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=False):
 
     print "Seed: {0}\n".format(seed)
 
-    ind = list()
-    simplices = od() 
     
     if not simp:
-        noise = PerlinNoise(size=(size,size+1))
-        _,size = noise.size
-        n = numpy.split(noise.getData(), size)
-        return df(n)
-    
-    simplex3 = simplex.simplex3
-    for i in range(-size, size+1):
-        simplices[i] = list()
-        ind.append(i)
-        for j in range(-size, size+1):
-            simp = simplex3(i*scale,j*scale,0)
-            simplices[i].append(simp)
-
-    #set_trace()
-
-    noise = df(simplices, index=ind)
+        noise = df(n)
+    else:
+        noise = _simplex(size)
+        #set_trace()
+    noise = df(noise)
+    noise = noise * scale
     noise = (noise + 1) * height
     return noise
+
+def _perlin(size):
+    '''Returns a numpy array containing equally sized arrays.'''
+    noise = PerlinNoise(size=(size,size+1))
+    _,size = noise.size
+    n = numpy.split(noise.getData(), size)
+    return n
+
+
+def _simplex(size):
+    '''Returns a dictionary mapping keys'''
+    simplices = list()
+    simplex3 = simplex.simplex3
+    for x,y in itertools.combinations(range(size+1),2):
+        simplices.append(simplex3(x,y,0))
+    simplices = numpy.array(simplices)
+    #set_trace()
+    return numpy.split(simplices, size+1)
 
 def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=500, scale=.00001, simp=True)
+    noise = generate_map(size=4, scale=.00001, simp=True)
+    print noise.describe()
