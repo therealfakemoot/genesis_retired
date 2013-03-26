@@ -1,7 +1,8 @@
-from lib.core import generate_map
-from lib.vis import topo
-import lib.vis as vis
+from genesis.lib.core import generate_map
+from genesis.lib.vis import topo
+import genesis.lib.vis as vis
+import sys
 
-n = generate_map(200, scale=.005, simp=True)
+n = generate_map(int(sys.argv[1]), scale=int(sys.argv[2]), simp=True)
 topo(n)
 vis.PLT.show()
