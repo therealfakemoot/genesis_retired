@@ -22,5 +22,8 @@ def histo():
     cb.set_label('mean value')
     PLT.show()
 
-def topo(noisemap):
-    return contour(noisemap)
+def topo(noisemap, **kwargs):
+    con = contour(noisemap, **kwargs)
+    PLT.clabel(con, inline=1, fontsize=10)
+    CB = PLT.colorbar(con, extend='both')
+    return con
