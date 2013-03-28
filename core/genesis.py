@@ -77,5 +77,5 @@ def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=5, scale=.00001, simp=True)
+    noise = generate_map(size=26, scale=.00001, simp=True)
     print noise.describe()
