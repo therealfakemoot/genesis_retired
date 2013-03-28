@@ -13,8 +13,11 @@ At the moment, there is only a demo of the topological map created by phase one 
 ````
 cd genesis_env/
 source bin/activate
-python genesis/map_scaling.py
+python genesis/demo.py
 ````
+
+*_WARNING_*
+Trying to contour plot a map larger than 1000x1000 may *completely* bomb your memory. Be careful. Start gradually.
 
 #Notes
 This is extemely alpha software. Only phase one, heightmap generation, is fully operational. Watch dev for changes, I'm only going to merge dev into master as phases are completed.
