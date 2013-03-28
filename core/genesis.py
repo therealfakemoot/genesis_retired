@@ -14,6 +14,10 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
     '''Generates a table of simplex values for a two-dimensional plane.
     Parameters
     ----------
+    scale : float
+        'Smooths' or 'roughens' the simplex function, creating greater or 
+        smaller variance in values at adjacent points. A fractional scale
+        argument increases the smoothness.
     size : integer,optional
         Dictates the world's dimensions.
     seed : integer,optional
@@ -36,20 +40,15 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
     noise = df(noise)
     return noise
 
-def rescale(frame, scale, height):
+def rescale(frame, height):
     '''
     frame : dataFrame
-    scale : float
-        'Smooths' or 'roughens' the simplex function, creating greater or 
-        smaller variance in values at adjacent points. A fractional scale
-        argument increases the smoothness.
     height : integer
         Dictates the total height of geographic features of the map. Very large
         values will allow generation of maps with deep bodies of water or large
         amounts of underground volume.
     '''
-    noise = frame * scale
-    noise = (noise + 1) * height
+    noise = (frame + 1) * height
     return noise
 
 def _perlin(size):
@@ -60,14 +59,14 @@ def _perlin(size):
     return n
 
 
-def _simplex(size):
+def _simplex(size, scale=.001):
     '''Returns a dictionary mapping keys'''
     if size %2 != 0: raise ValueError('Size parameter must be even.')
     simplices = list()
     simplex3 = simplex.simplex3
     for i in xrange(size):
         for j in xrange(size):
-            simplices.append(simplex3(i,j,0))
+            simplices.append(simplex3(i*scale,j*scale,0))
     simplices = numpy.array(simplices)
     #set_trace()
     if size % 2 == 0:
