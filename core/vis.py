@@ -31,8 +31,8 @@ def topo(noisemap, viewport=None, **kwargs):
         A tuple containing the top left corner of the viewport, and the width
         and height. Allows subsections of the map to be displayed.
     '''
-    y,x,h,w = viewport
     if viewport:
+        y,x,h,w = viewport
         con = contour(noisemap.ix[x:x+w,y:y+h], **kwargs)
     else:
         con = contour(noisemap, **kwargs)
