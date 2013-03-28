@@ -26,4 +26,5 @@ This is extemely alpha software. Only phase one, heightmap generation, is fully 
 - [x] Phase One: Height Map Generation and Display
 - [ ] Phase Two: Water Placement
 - [ ] Phase Three: Biome Placement
-- [ ] Phase Four: Artificial Feature Generation And Placement
+- [ ] Phase Four: Artificial Feature Generation
+- [ ] Phase Five: Artifical Feature Placement
