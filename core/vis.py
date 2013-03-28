@@ -22,8 +22,20 @@ def histo():
     cb.set_label('mean value')
     PLT.show()
 
-def topo(noisemap, **kwargs):
-    con = contour(noisemap, **kwargs)
+def topo(noisemap, viewport=None, **kwargs):
+    '''Plots a topological map of a given heightmap, with an optional viewport
+    for fine grained mapping.
+
+    noisemap: DataFrame
+    viewport : tuple,(y,x,h,w)
+        A tuple containing the top left corner of the viewport, and the width
+        and height. Allows subsections of the map to be displayed.
+    '''
+    y,x,h,w = viewport
+    if viewport:
+        con = contour(noisemap.ix[x:x+w,y:y+h], **kwargs)
+    else:
+        con = contour(noisemap, **kwargs)
     PLT.clabel(con, inline=1, fontsize=10)
     CB = PLT.colorbar(con, extend='both')
     return con
