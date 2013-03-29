@@ -22,7 +22,11 @@ def histo():
     cb.set_label('mean value')
     PLT.show()
 
-def topo(noisemap, viewport=None, **kwargs):
+def view(frame, viewport):
+    y,x,h,w = viewport
+    return frame.ix[x:x+w,y:y+h], 
+
+def topo(noisemap, view=None, **kwargs):
     '''Plots a topological map of a given heightmap, with an optional viewport
     for fine grained mapping.
 
@@ -31,9 +35,8 @@ def topo(noisemap, viewport=None, **kwargs):
         A tuple containing the top left corner of the viewport, and the width
         and height. Allows subsections of the map to be displayed.
     '''
-    if viewport:
-        y,x,h,w = viewport
-        con = contour(noisemap.ix[x:x+w,y:y+h], **kwargs)
+    if view:
+        con = contour(view(noisemap, view), **kwargs)
     else:
         con = contour(noisemap, **kwargs)
     PLT.clabel(con, inline=1, fontsize=10)
