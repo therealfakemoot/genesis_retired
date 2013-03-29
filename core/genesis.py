@@ -37,7 +37,7 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
     else:
         simplex.set_seed(seed)
         noise = _simplex(size)
-    noise = df(noise)
+    noise = df(noise) + 1
     return noise
 
 def rescale(frame, height):
@@ -48,7 +48,7 @@ def rescale(frame, height):
         values will allow generation of maps with deep bodies of water or large
         amounts of underground volume.
     '''
-    noise = (frame + 1) * height
+    noise = frame  * height
     return noise
 
 def _perlin(size):
