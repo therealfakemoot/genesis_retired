@@ -17,7 +17,8 @@ parser.add_argument('--height')
 
 
 def demo():
-    n = generate_map(500,scale=.005) #This will generate a height map for your new world.
+    n = generate_map(500,scale=.005)
+    n = rescale(n, 7500)
     topo(n)
     vis.PLT.show()
 
