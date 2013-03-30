@@ -17,9 +17,10 @@ parser.add_argument('--height')
 
 
 def demo():
-    n = generate_map(500,scale=.005)
-    n = rescale(n, 7500)
-    topo(n)
+    height = 9000
+    n = generate_map(1000,scale=.005)
+    n = rescale(n, height)
+    topo(n-(height*1/3))
     vis.PLT.show()
 
 if __name__ == '__main__':
