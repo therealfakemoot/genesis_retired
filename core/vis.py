@@ -27,14 +27,19 @@ def topo(noisemap, view=None, levels=None, **kwargs):
     for fine grained mapping.
 
     noisemap: DataFrame
-    viewport : tuple,(y,x,h,w)
+
+    viewport: tuple,(y,x,h,w)
         A tuple containing the top left corner of the viewport, and the width
         and height. Allows subsections of the map to be displayed.
+
+    levels: range
+        A sequence containing values indicating at which heights to place contour lines.
     '''
     if not levels:
         nmax = int(max(noisemap.max()))
         nmin = int((min(noisemap.min())))
-        step = (nmax - nmin)/15
+        #step = (nmax - nmin)/15
+        step = 250
         levels = range(nmin, nmax, step)
     if view:
         con = contour(view(noisemap, view), levels, **kwargs)
