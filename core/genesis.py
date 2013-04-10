@@ -27,6 +27,8 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
         size = 5
     if not seed:
         seed = randint(0, sys.maxint)
+    if not scale:
+        scale = .0001
 
     print "Seed: {0}\n".format(seed)
     
@@ -36,7 +38,7 @@ def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
         #noise = df(n)
     else:
         simplex.set_seed(seed)
-        noise = _simplex(size)
+        noise = _simplex(size, scale=scale)
     noise = df(noise) + 1
     return noise
 
@@ -76,5 +78,5 @@ def coord_access(frame, coords=(0,0)):
     return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    noise = generate_map(size=26, scale=.00001, simp=True)
+    noise = generate_map(size=26, scale=.00001)
     print noise.describe()
