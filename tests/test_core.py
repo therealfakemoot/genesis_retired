@@ -1,13 +1,12 @@
-from genesis.lib import core
-from nose import with_setup
+from genesis.core import genesis
 
 class test_Core():
     @classmethod
     def setupClass(self):
-        self.noise = core.generate_map(size=10)
+        self.noise = genesis.generate_map(size=10)
 
     def test_MapGeneration(self):
-        noise = core.generate_map(size=10)
+        noise = genesis.generate_map(size=10)
 
     def test_CoordinateAccess(self):
-        core.coord_access(self.noise)
+        genesis.coord_access(self.noise)
