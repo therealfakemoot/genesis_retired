@@ -14,7 +14,7 @@ def view(frame, viewport):
     y,x,h,w = viewport
     return frame.ix[x:x+w,y:y+h], 
 
-def slice(frame, view):
+def slice(frame, viewport):
     xmax,ymax = frame.size
     y,x,h,w = viewport
     if any(n % 2 != 0 for n in view): raise ValueError('Viewport values must be even integers.')
