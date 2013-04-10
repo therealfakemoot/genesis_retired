@@ -4,6 +4,7 @@ from matplotlib import mlab as ML
 import numpy as NP
 from core import generate_map
 from matplotlib.pyplot import contour
+from functools import partial
 
 def view(frame, viewport):
     '''
@@ -12,16 +13,18 @@ def view(frame, viewport):
         A tuple of the form (x,y,height,width)
     '''
     y,x,h,w = viewport
-    return frame.ix[x:x+w,y:y+h], 
+    return frame.ix[x:x+w,y:y+h]
 
 def slice(frame, viewport):
     xmax,ymax = frame.size
     y,x,h,w = viewport
     if any(n % 2 != 0 for n in view): raise ValueError('Viewport values must be even integers.')
     chunks = xmax/w
+    fview = partial(view, frame)
+    for i in range(1, chunks+1):
+        for j in range(1, chunks+1):
+            yield fview((y*j, x*i, h, w))
     
-        
-
 def topo(noisemap, view=None, levels=None, **kwargs):
     '''Plots a topological map of a given heightmap, with an optional viewport
     for fine grained mapping.
