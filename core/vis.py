@@ -15,15 +15,16 @@ def view(frame, viewport):
     y,x,h,w = viewport
     return frame.ix[x:x+w,y:y+h]
 
-def slice(frame, viewport):
-    xmax,ymax = frame.size
+def chunk(frame, viewport):
+    xmax,ymax = frame.shape
     y,x,h,w = viewport
-    if any(n % 2 != 0 for n in view): raise ValueError('Viewport values must be even integers.')
+    if any(n % 2 != 0 for n in viewport): raise ValueError('Viewport values must be even integers.')
+    if h != w: raise ValueError('Viewport must be of equal dimensions.')
     chunks = xmax/w
     fview = partial(view, frame)
-    for i in range(1, chunks+1):
-        for j in range(1, chunks+1):
-            yield fview((y*j, x*i, h, w))
+    for i in range(chunks):
+        for j in range(chunks):
+            yield fview((y + h*j, x + w*i, h-1, w-1))
     
 def topo(noisemap, view=None, levels=None, **kwargs):
     '''Plots a topological map of a given heightmap, with an optional viewport
