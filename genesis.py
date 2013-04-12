@@ -1,13 +1,14 @@
 from core.genesis import generate_map
 from core.genesis import rescale
 from core.vis import topo
+from core import demo
 import core.vis as vis
 import sys
 import argparse
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('create')
+parser.add_argument('--nosave',help='Prevents Genesis from serializing the generated map to disk.', action='store_true')
 
 parser.add_argument('-l','--load', action='store_false')
 
@@ -16,12 +17,8 @@ parser.add_argument('--scale')
 parser.add_argument('--height')
 
 
-def demo():
-    height = 9000
-    n = generate_map(1000,scale=.005)
-    n = rescale(n, height)
-    topo(n-(height*1/3))
-    vis.PLT.show()
 
 if __name__ == '__main__':
-    demo()
+    args = parser.parse_args()
+    if args.demo:
+        demo.demo()
