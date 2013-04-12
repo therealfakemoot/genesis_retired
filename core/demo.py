@@ -1,7 +1,7 @@
-from core.genesis import generate_map
-from core.genesis import rescale
-from core.vis import topo
-import core.vis as vis
+from genesis import generate_map
+from genesis import rescale
+from vis import topo
+import vis
 
 def demo():
     '''A simple demo of how to use Genesis programatically.'''
@@ -10,3 +10,6 @@ def demo():
     n = rescale(n, height)
     topo(n-(height*1/3))
     vis.PLT.show()
+
+if __name__ == '__main__':
+    demo()
