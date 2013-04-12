@@ -12,12 +12,12 @@ def view(frame, viewport):
     viewport: tuple
         A tuple of the form (x,y,height,width)
     '''
-    y,x,h,w = viewport
+    x,y,h,w = viewport
     return frame.ix[x:x+w,y:y+h]
 
 def chunk(frame, viewport):
     xmax,ymax = frame.shape
-    y,x,h,w = viewport
+    x,y,h,w = viewport
     if any(n % 2 != 0 for n in viewport): raise ValueError('Viewport values must be even integers.')
     if h != w: raise ValueError('Viewport must be of equal dimensions.')
     chunks = xmax/w
