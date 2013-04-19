@@ -12,10 +12,17 @@ def view(frame, viewport):
     viewport: tuple
         A tuple of the form (x,y,height,width)
     '''
+
     x,y,h,w = viewport
     return frame.ix[x:x+w,y:y+h]
 
 def chunk(frame, viewport):
+    '''
+    Slices a DataFrame into smaller, equal-sized DataFrames according to viewport.
+    viewport: tuple
+        A tuple of the form (x,y,height,width)
+    '''
+
     xmax,ymax = frame.shape
     x,y,h,w = viewport
     if any(n % 2 != 0 for n in viewport): raise ValueError('Viewport values must be even integers.')
@@ -35,6 +42,7 @@ def topo(noisemap, view=None, levels=None, **kwargs):
         A tuple containing the top left corner of the viewport, and the width
         and height. Allows subsections of the map to be displayed.
     '''
+
     if not levels:
         nmax = int(max(noisemap.max()))
         nmin = int((min(noisemap.min())))
