@@ -19,7 +19,5 @@ save_opts.add_argument('--nosave',help='Prevents Genesis from serializing the ge
 save_opts.add_argument('-l','--load', action='store_false', dest='load', help='Path to a previously serialised noisemap.')
 
 
-
-
 if __name__ == '__main__':
     args = parser.parse_args()
