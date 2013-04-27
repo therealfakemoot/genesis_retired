@@ -1,3 +1,4 @@
+from math import ceil
 from matplotlib import pyplot as PLT
 from matplotlib import cm as CM
 from matplotlib import mlab as ML
@@ -38,18 +39,14 @@ def topo(noisemap, view=None, levels=None, **kwargs):
     for fine grained mapping.
 
     noisemap: DataFrame
-    viewport : tuple,(y,x,h,w)
-        A tuple containing the top left corner of the viewport, and the width
-        and height. Allows subsections of the map to be displayed.
     '''
 
     if not levels:
         nmax = int(max(noisemap.max()))
         nmin = int((min(noisemap.min())))
         step = (nmax - nmin)/15
-        levels = range(nmin, nmax, step)
-    if view:
-        con = contour(view(noisemap, view), levels, **kwargs)
+        levels = range(nmin, nmax, 500)
+        con = contour(noisemap, levels, **kwargs)
     else:
         con = contour(noisemap, levels, **kwargs)
     PLT.clabel(con, inline=1, fontsize=10)
