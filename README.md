@@ -13,7 +13,7 @@ At the moment, there is only a demo of the topological map created by phase one 
 ````
 cd genesis_env/
 source bin/activate
-python genesis/demo.py
+python genesis/core/demo.py
 ````
 
 *_WARNING_*

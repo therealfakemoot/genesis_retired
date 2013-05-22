@@ -1,44 +1,54 @@
+from math import ceil
 from matplotlib import pyplot as PLT
 from matplotlib import cm as CM
 from matplotlib import mlab as ML
 import numpy as NP
 from core import generate_map
 from matplotlib.pyplot import contour
-
-def histo():
-    gridsize=100
-    PLT.subplot(111)
-
-# if 'bins=None', then color of each hexagon corresponds directly to its count
-# 'C' is optional--it maps values to x-y coordinates; if 'C' is None (default) then 
-# the result is a pure 2D histogram 
-    size = 150
-    noise = generate_map(size)
-    x = y = NP.array(range(-size,size))
-    PLT.hexbin(x, y, C=noise.values, gridsize=gridsize, cmap=CM.jet)
-    PLT.axis([x.min(), x.max(), y.min(), y.max()])
-
-    cb = PLT.colorbar()
-    cb.set_label('mean value')
-    PLT.show()
+from functools import partial
 
 def view(frame, viewport):
-    y,x,h,w = viewport
-    return frame.ix[x:x+w,y:y+h], 
+    '''
+    Returns a windowed version of the dataframe.
+    viewport: tuple
+        A tuple of the form (x,y,height,width)
+    '''
 
-def topo(noisemap, view=None, **kwargs):
+    x,y,h,w = viewport
+    return frame.ix[x:x+w,y:y+h]
+
+def chunk(frame, viewport):
+    '''
+    Slices a DataFrame into smaller, equal-sized DataFrames according to viewport.
+    viewport: tuple
+        A tuple of the form (x,y,height,width)
+    '''
+
+    xmax,ymax = frame.shape
+    x,y,h,w = viewport
+    if any(n % 2 != 0 for n in viewport): raise ValueError('Viewport values must be even integers.')
+    if h != w: raise ValueError('Viewport must be of equal dimensions.')
+    chunks = xmax/w
+    fview = partial(view, frame)
+    for i in range(chunks):
+        for j in range(chunks):
+            yield fview((y + h*j, x + w*i, h-1, w-1))
+    
+def topo(noisemap, view=None, levels=None, **kwargs):
     '''Plots a topological map of a given heightmap, with an optional viewport
     for fine grained mapping.
 
     noisemap: DataFrame
-    viewport : tuple,(y,x,h,w)
-        A tuple containing the top left corner of the viewport, and the width
-        and height. Allows subsections of the map to be displayed.
     '''
-    if view:
-        con = contour(view(noisemap, view), **kwargs)
+
+    if not levels:
+        nmax = int(max(noisemap.max()))
+        nmin = int((min(noisemap.min())))
+        step = (nmax - nmin)/15
+        levels = range(nmin, nmax, 500)
+        con = contour(noisemap, levels, **kwargs)
     else:
-        con = contour(noisemap, **kwargs)
+        con = contour(noisemap, levels, **kwargs)
     PLT.clabel(con, inline=1, fontsize=10)
-    CB = PLT.colorbar(con, extend='both')
+    #CB = PLT.colorbar(con, extend='both')
     return con
