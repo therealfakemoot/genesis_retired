@@ -1,5 +1,5 @@
-from matplotlib import pyplot as PLT
-import numpy as NP
+from matplotlib import pyplot as plt
+import numpy as np
 from core import generate_map
 from matplotlib.pyplot import contour
 from functools import partial
@@ -13,7 +13,7 @@ def view(frame, viewport):
     '''
 
     x, y, h, w = viewport
-    return frame.ix[x:x+w, y:y+h]
+    return frame.ix[x:x + w, y:y + h]
 
 
 def chunk(frame, viewport):
@@ -29,11 +29,11 @@ def chunk(frame, viewport):
         raise ValueError('Viewport values must be even integers.')
     if h != w:
         raise ValueError('Viewport must be of equal dimensions.')
-    chunks = xmax/w
+    chunks = xmax / w
     fview = partial(view, frame)
     for i in range(chunks):
         for j in range(chunks):
-            yield fview((y + h*j, x + w*i, h-1, w-1))
+            yield fview((y + h * j, x + w * i, h - 1, w - 1))
 
 
 def topo(noisemap, view=None, levels=None, **kwargs):
@@ -46,11 +46,11 @@ def topo(noisemap, view=None, levels=None, **kwargs):
     if not levels:
         nmax = int(max(noisemap.max()))
         nmin = int((min(noisemap.min())))
-        step = (nmax - nmin)/15
+        step = (nmax - nmin) / 15
         levels = range(nmin, nmax, 500)
         con = contour(noisemap, levels, **kwargs)
     else:
         con = contour(noisemap, levels, **kwargs)
-    PLT.clabel(con, inline=1, fontsize=10)
+    plt.clabel(con, inline=1, fontsize=10)
     #CB = PLT.colorbar(con, extend='both')
     return con
