@@ -11,10 +11,10 @@ def chunk(iterable, n, fillvalue=None):
     return izip_longest(fillvalue=fillvalue, *args)
 
 
-def map_noise(height, width, scale=.001):
+def map_noise(height, width, z, scale=.001):
     coords = product(range(height), range(width))
     for x, y in coords:
-        yield noise.snoise3(x * scale, y * scale, 0)
+        yield noise.snoise3(x * scale, y * scale, 0) * z
 
 
 class Map(object):
