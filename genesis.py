@@ -1,23 +1,82 @@
-from core.genesis import generate_map
-from core.genesis import rescale
-from core.vis import topo
-from core import demo
-import core.vis as vis
+import numpy
+from pandas import DataFrame as df
+import simplex
+from noise import PerlinNoise
+from profiler import profile_this
+from random import randint
 import sys
-import argparse
 
-parser = argparse.ArgumentParser()
 
-map_opts = parser.add_argument_group('Map Properties', 'These arguments relate to the attributes of map generation.')
+def generate_map(size=None, seed=None, scale=None, height=None, simp=True):
+    '''Generates a table of simplex values for a two-dimensional plane.
+    Parameters
+    ----------
+    scale : float
+        'Smooths' or 'roughens' the simplex function, creating greater or
+        smaller variance in values at adjacent points. A fractional scale
+        argument increases the smoothness.
+    size : integer,optional
+        Dictates the world's dimensions.
+    seed : integer,optional
+        Seed for the simplex random number generator.
+    '''
+    if not size:
+        size = 5
+    if not seed:
+        seed = randint(0, sys.maxint)
+    if not scale:
+        scale = .0001
 
-map_opts.add_argument('--size', help='Desired size of the generated world in terms of pixels.')
-map_opts.add_argument('--scale', help='A float that determines the \'smoothness\' of the noisemap. Smaller values create more smoothness.')
-map_opts.add_argument('--height', help='Maximum height of the topological map. Units are arbitrary; this value is up for interpretation by the end user.')
+    print "Seed: {0}\n".format(seed)
+    if not simp:
+        #Perlin noise is currently not being used, pending further review.
+        pass
+        #noise = df(n)
+    else:
+        simplex.set_seed(seed)
+        noise = _simplex(size, scale=scale)
+    noise = df(noise) + 1
+    return noise
 
-save_opts = parser.add_argument_group('Save Options', 'These arguments dictate when, where, and if data is saved to or read from the disk.')
-save_opts.add_argument('--nosave',help='Prevents Genesis from serializing the generated map to disk.', action='store_true')
-save_opts.add_argument('-l','--load', action='store_false', dest='load', help='Path to a previously serialised noisemap.')
 
+def rescale(frame, height):
+    '''
+    frame : dataFrame
+    height : integer
+        Dictates the total height of geographic features of the map. Very large
+        values will allow generation of maps with deep bodies of water or large
+        amounts of underground volume.
+    '''
+    noise = frame * height
+    return noise
+
+
+def _perlin(size):
+    '''Returns a numpy array containing equally sized arrays.'''
+    noise = PerlinNoise(size=(size, size+1))
+    _, size = noise.size
+    n = numpy.split(noise.getData(), size)
+    return n
+
+
+def _simplex(size, scale=.001):
+    '''Returns a dictionary mapping keys'''
+    if size % 2 != 0:
+        raise ValueError('Size parameter must be even.')
+    simplices = list()
+    simplex3 = simplex.simplex3
+    for i in xrange(size):
+        for j in xrange(size):
+            simplices.append(simplex3(i*scale, j*scale, 0))
+    simplices = numpy.array(simplices)
+    #set_trace()
+    if size % 2 == 0:
+        return numpy.split(simplices, size)
+
+
+def coord_access(frame, coords=(0, 0)):
+    return frame[coords[0]][coords[1]]
 
 if __name__ == '__main__':
-    args = parser.parse_args()
+    noise = generate_map(size=26, scale=.0001)
+    print noise.describe()

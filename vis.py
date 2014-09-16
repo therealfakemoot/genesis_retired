@@ -1,11 +1,9 @@
-from math import ceil
 from matplotlib import pyplot as PLT
-from matplotlib import cm as CM
-from matplotlib import mlab as ML
 import numpy as NP
 from core import generate_map
 from matplotlib.pyplot import contour
 from functools import partial
+
 
 def view(frame, viewport):
     '''
@@ -14,8 +12,9 @@ def view(frame, viewport):
         A tuple of the form (x,y,height,width)
     '''
 
-    x,y,h,w = viewport
-    return frame.ix[x:x+w,y:y+h]
+    x, y, h, w = viewport
+    return frame.ix[x:x+w, y:y+h]
+
 
 def chunk(frame, viewport):
     '''
@@ -24,16 +23,19 @@ def chunk(frame, viewport):
         A tuple of the form (x,y,height,width)
     '''
 
-    xmax,ymax = frame.shape
-    x,y,h,w = viewport
-    if any(n % 2 != 0 for n in viewport): raise ValueError('Viewport values must be even integers.')
-    if h != w: raise ValueError('Viewport must be of equal dimensions.')
+    xmax, ymax = frame.shape
+    x, y, h, w = viewport
+    if any(n % 2 != 0 for n in viewport):
+        raise ValueError('Viewport values must be even integers.')
+    if h != w:
+        raise ValueError('Viewport must be of equal dimensions.')
     chunks = xmax/w
     fview = partial(view, frame)
     for i in range(chunks):
         for j in range(chunks):
             yield fview((y + h*j, x + w*i, h-1, w-1))
-    
+
+
 def topo(noisemap, view=None, levels=None, **kwargs):
     '''Plots a topological map of a given heightmap, with an optional viewport
     for fine grained mapping.
