@@ -7,5 +7,6 @@ setup(
     author_email='drakonik@gmail.com',
     url='https://github.com/therealfakemoot/Genesis/',
     packages=find_packages(),
-    zip_safe=False
+    zip_safe=False,
+    install_requires=['matplotlib', 'numpy', 'coverage']
 )
