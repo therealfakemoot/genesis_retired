@@ -1,9 +1,0 @@
-six
-coverage
-numpy
-matplotlib
-nose
-python-dateutil
-pytz
-pandas
-wsgiref
