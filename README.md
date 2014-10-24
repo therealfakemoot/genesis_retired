@@ -22,7 +22,7 @@ python -m genesis --demo X Y
 For detailed usage instructions, see ````python -m genesis --help````.
 
 
-*_WARNING_*
+##*_WARNING_*
 Trying to contour plot a map larger than 1000x1000 may *completely* bomb your memory. Be careful. Start gradually.
 
 
