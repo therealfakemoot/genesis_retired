@@ -1,7 +1,2 @@
-*.pyc
-.coverage
-.gitignore
+*.py[oc]
 *.swp
-.noseids
-.coveragerc
-*.prof
