@@ -64,8 +64,8 @@ def map_noise(height, width, z, scale=.001):
 
 class Map(object):
     def __init__(self, shape, height=1000000, seed=None, scale=.0001):
-        self.shape = shape
         self._array = np.asarray(list(ichunk(map_noise(*shape, z=height, scale=scale), shape[1])))
+        self.shape = self._array.shape
 
     def __getitem__(self, key):
         return self._array[key[0]][key[1]]
