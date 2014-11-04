@@ -1,8 +1,12 @@
+import logging
 from itertools import izip_longest, product
 from functools import partial
 
 import numpy as np
 import noise
+
+
+logger = logging.getLogger(__name__)
 
 
 def view(frame, viewport):
