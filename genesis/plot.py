@@ -1,7 +1,8 @@
-import map
 import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
+
+from genesis.map import Map
 
 
 def plot_map(noisemap):
@@ -26,5 +27,5 @@ def plot_map(noisemap):
 
 
 def test(x, y):
-    m = map.Map((x, y))
+    m = Map((x, y))
     plot_map(m)
