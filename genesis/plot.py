@@ -2,6 +2,8 @@ import matplotlib
 import numpy as np
 import matplotlib.pyplot as plt
 
+import guppy
+
 from genesis.map import Map
 
 
@@ -26,6 +28,13 @@ def plot_map(noisemap):
     plt.show()
 
 
-def test(x, y):
-    m = Map((x, y))
-    plot_map(m)
+def memtest():
+    x, y = 100, 100
+    for i in range(1, 20):
+        hp = guppy.hpy()
+        X, Y = x * i, y * 1
+        hp.setref()
+        m = Map((x, y))
+        plot_map(m)
+        h = hp.heap()
+        h.dump('{x}by{y}.prof'.format(x=X, y=Y))
