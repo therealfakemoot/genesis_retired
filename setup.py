@@ -8,5 +8,8 @@ setup(
     url='https://github.com/therealfakemoot/Genesis/',
     packages=find_packages(),
     zip_safe=False,
-    install_requires=['matplotlib', 'numpy', 'coverage']
+    install_requires=['matplotlib', 'numpy', 'coverage'],
+    entry_points={
+        'console_scripts': ['genesis = genesis.application:main']
+    }
 )
