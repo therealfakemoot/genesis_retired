@@ -17,7 +17,7 @@ python setup.py install --user
 #Demo
 After installation, a demo is available to showcase simple uses. The simplest invocation looks something like this:
 ````
-python -m genesis --demo X Y
+genesis --demo X Y
 ````
 For detailed usage instructions, see ````python -m genesis --help````.
 
