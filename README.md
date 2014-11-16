@@ -19,7 +19,7 @@ After installation, a demo is available to showcase simple uses. The simplest in
 ````
 genesis --demo X Y
 ````
-For detailed usage instructions, see ````python -m genesis --help````.
+For detailed usage instructions, see ````genesis --help````.
 
 
 ##*_WARNING_*
